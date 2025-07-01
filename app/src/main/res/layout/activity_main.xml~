@@ -54,7 +54,7 @@
                 android:paddingBottom="4dp"/>
 
             <RadioGroup
-                android:id="@+id/genderGroup"
+                android:id="@+id/radioGender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -122,7 +122,7 @@
 
             <!-- Calculate Button -->
             <Button
-                android:id="@+id/btn_calculate"
+                android:id="@+id/btnHitung"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Calculate BMI"
@@ -133,7 +133,7 @@
 
             <!-- Reset Button -->
             <Button
-                android:id="@+id/btn_reset"
+                android:id="@+id/btnReset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Reset"
@@ -141,7 +141,15 @@
                 android:backgroundTint="#D3D3D3"
                 android:textColor="#000000"
                 android:textSize="16sp" />
-
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#FF0000"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
             <!-- BMI Result -->
             <TextView
                 android:layout_width="wrap_content"

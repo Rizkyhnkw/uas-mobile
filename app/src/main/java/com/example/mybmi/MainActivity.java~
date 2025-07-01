@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private String userEmail;
     private DbHelper db;
-    private  Button btnHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         db = new DbHelper(this);
         sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE);
         userEmail = sharedPreferences.getString("email", null);
-        btnHistory = findViewById(R.id.btnHistory);
 
         edtBerat.setMinValue(1);
         edtBerat.setMaxValue(200);
@@ -133,13 +131,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     txtHasil.setText("Mohon isi semua kolom!");
                 }
-            }
-        });
-        btnHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
-                startActivity(intent);
             }
         });
         btnReset.setOnClickListener(new View.OnClickListener() {

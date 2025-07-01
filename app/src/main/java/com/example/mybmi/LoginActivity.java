@@ -1,0 +1,62 @@
+package com.example.mybmi;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+public class LoginActivity extends AppCompatActivity {
+
+    private EditText edtEmail, edtPassword;
+    private Button btnLogin;
+    private TextView txtRegister;
+    private DbHelper db;
+    private SharedPreferences sharedPreferences;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_login);
+
+        db = new DbHelper(this);
+        sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE);
+
+        edtEmail = findViewById(R.id.edtEmail);
+        edtPassword = findViewById(R.id.edtPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        txtRegister = findViewById(R.id.txtRegister);
+
+        btnLogin.setOnClickListener(v -> {
+            String email = edtEmail.getText().toString().trim();
+            String password = edtPassword.getText().toString().trim();
+
+            if(db.checkUser(email, password)) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("isLoggedIn", true);
+                editor.putString("email", email);
+                editor.apply();
+
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(LoginActivity.this, "Login Gagal", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        txtRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        });
+            }
+    }
