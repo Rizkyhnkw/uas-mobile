@@ -1,181 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#F8F8FF"
-    android:padding="16dp">
+    android:background="#F0F4F8"
+    tools:context=".MainActivity">
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="8dp"
-        android:layout_margin="8dp"
-        android:background="@android:color/white"
-        app:cardCornerRadius="12dp">
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BMI Calculator"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/maintext"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/inputCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/labelUsia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Usia"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <NumberPicker
+                    android:id="@+id/edtUsia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    app:layout_constraintTop_toBottomOf="@id/labelUsia"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <RadioGroup
+                    android:id="@+id/radioGender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/edtUsia"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/radioPria"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pria" />
+
+                    <RadioButton
+                        android:id="@+id/radioWanita"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:text="Wanita" />
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/hwLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    app:layout_constraintTop_toBottomOf="@id/radioGender"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tinggi (cm)"
+                            android:textSize="16sp"/>
+
+                        <NumberPicker
+                            android:id="@+id/edtTinggi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Berat (kg)"
+                            android:textSize="16sp"/>
+
+                        <NumberPicker
+                            android:id="@+id/edtBerat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="100dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <Button
+            android:id="@+id/btnHitung"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Hitung BMI"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/bt"
+            android:textColor="@android:color/white"
+            android:paddingVertical="12dp"
+            app:layout_constraintTop_toBottomOf="@id/inputCard"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/secondaryButtonsLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/btnHitung"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- Title -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="BMI Calculator"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:paddingBottom="24dp" />
-
-            <!-- Age -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Age"
-                android:textSize="16sp"
-                android:paddingBottom="4dp"/>
-
-            <NumberPicker
-                android:id="@+id/edtUsia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-
-            <!-- Gender -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gender"
-                android:textSize="16sp"
-                android:layout_marginTop="16dp"
-                android:paddingBottom="4dp"/>
-
-            <RadioGroup
-                android:id="@+id/radioGender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center">
-
-                <RadioButton
-                    android:id="@+id/radioPria"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Male" />
-
-                <RadioButton
-                    android:id="@+id/radioWanita"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Female"
-                    android:layout_marginStart="32dp" />
-            </RadioGroup>
-
-            <!-- Height & Weight -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="16dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginEnd="32dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Height (cm)"
-                        android:textSize="16sp"
-                        android:layout_gravity="center"/>
-
-                    <NumberPicker
-                        android:id="@+id/edtTinggi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Weight (kg)"
-                        android:textSize="16sp"
-                        android:layout_gravity="center"/>
-
-                    <NumberPicker
-                        android:id="@+id/edtBerat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Calculate Button -->
-            <Button
-                android:id="@+id/btnHitung"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Calculate BMI"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="#2962FF"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-
-            <!-- Reset Button -->
-            <Button
-                android:id="@+id/btnReset"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Reset"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#D3D3D3"
-                android:textColor="#000000"
-                android:textSize="16sp" />
             <Button
                 android:id="@+id/btnHistory"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Lihat Riwayat"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginEnd="4dp"
+                android:text="Riwayat"
+                style="?attr/materialButtonOutlinedStyle" />
+
             <Button
-                android:id="@+id/btnLogout"
-                android:layout_width="match_parent"
+                android:id="@+id/btnReset"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Logout"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#FF0000"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-            <!-- BMI Result -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Your BMI is"
-                android:textSize="18sp"
-                android:layout_gravity="center"
-                android:layout_marginTop="24dp"/>
+                android:layout_marginStart="4dp"
+                android:text="Reset"
+                style="?attr/materialButtonOutlinedStyle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/resultLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="24dp"
+            android:padding="20dp"
+            android:gravity="center"
+            android:background="@drawable/shape1"
+            android:backgroundTint="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@id/secondaryButtonsLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="00.00"
-                android:textSize="32sp"
+                android:text="Hasil BMI Anda"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/txtBmiValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0"
+                android:textSize="48sp"
                 android:textStyle="bold"
-                android:textColor="#2962FF"
-                android:layout_gravity="center"
-                android:id="@+id/txtHasil"
-                />
+                android:textColor="@color/bt" />
+
+            <TextView
+                android:id="@+id/txtBmiCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kategori"
+                android:textSize="20sp"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:id="@+id/txtBmiSuggestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Saran akan muncul di sini."
+                android:textAlignment="center"/>
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#E53935"
+            android:textColor="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@id/resultLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="16dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

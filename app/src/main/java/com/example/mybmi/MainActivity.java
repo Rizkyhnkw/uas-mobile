@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private NumberPicker edtBerat;
     private NumberPicker edtTinggi;
     private Button btnHitung;
-    private TextView txtHasil;
+    private TextView txtBmiValue, txtBmiCategory, txtBmiSuggestion;
     private Button btnReset;
     private NumberPicker edtUsia;
     private RadioGroup radioGender;
@@ -39,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
         edtBerat = findViewById(R.id.edtBerat);
         edtTinggi = findViewById(R.id.edtTinggi);
         btnHitung = findViewById(R.id.btnHitung);
-        txtHasil = findViewById(R.id.txtHasil);
+        txtBmiValue = findViewById(R.id.txtBmiValue);
+        txtBmiCategory = findViewById(R.id.txtBmiCategory);
+        txtBmiSuggestion = findViewById(R.id.txtBmiSuggestion);
         btnReset = findViewById(R.id.btnReset);
         edtUsia = findViewById(R.id.edtUsia);
         radioGender = findViewById(R.id.radioGender);
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 int selectedGenderId = radioGender.getCheckedRadioButtonId();
 
                 if (beratStr.isEmpty() || tinggiStr.isEmpty() || usiaStr.isEmpty() || selectedGenderId == -1) {
-                    txtHasil.setText("Mohon isi semua kolom dan pilih jenis kelamin!");
+                    txtBmiValue.setText("Mohon isi semua kolom dan pilih jenis kelamin!");
                     return;
                 }
 
@@ -84,24 +86,13 @@ public class MainActivity extends AppCompatActivity {
                     float tinggiM = tinggiCm / 100;
 
                     if (tinggiM == 0) {
-                        txtHasil.setText("Tinggi tidak boleh nol!");
+                        txtBmiValue.setText("Tinggi tidak boleh nol!");
                         return;
                     }
 
                     float bmi = berat / (tinggiM * tinggiM);
                     String kategori;
-
-                    if (bmi < 18.5) {
-                        kategori = "Kurus";
-                    } else if (bmi < 24.9) {
-                        kategori = "Normal";
-                    } else if (bmi < 29.9) {
-                        kategori = "Gemuk";
-                    } else {
-                        kategori = "Obesitas";
-                    }
-
-                    String penjelasan = "";
+                    String penjelasan;
 
                     if (bmi < 18.5) {
                         kategori = "Kurus";
@@ -122,7 +113,9 @@ public class MainActivity extends AppCompatActivity {
                             bmi, kategori, gender, usia, penjelasan
                     );
 
-                    txtHasil.setText(hasil);
+                    txtBmiValue.setText(String.format("%.1f", bmi));
+                    txtBmiCategory.setText(kategori);
+                    txtBmiSuggestion.setText(penjelasan);
                     if (userEmail != null) {
                         boolean isSaved = db.addBmiHistory(userEmail, bmi, kategori);
                         if (!isSaved) {
@@ -131,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    txtHasil.setText("Mohon isi semua kolom!");
+                    txtBmiSuggestion.setText("Mohon isi semua kolom!");
                 }
             }
         });
@@ -147,7 +140,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 edtBerat.setValue(0);
                 edtTinggi.setValue(0);
-                txtHasil.setText("");
+                txtBmiValue.setText("0.0");
+                txtBmiCategory.setText("Kategori");
+                txtBmiSuggestion.setText("Saran akan muncul di sini.");
                 edtBerat.requestFocus();
             }
         });

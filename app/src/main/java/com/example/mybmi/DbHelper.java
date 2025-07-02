@@ -8,9 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class DbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "user.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 //    Users
     private static final String TABLE_USER = "user";
     private static final String COLUMN_ID = "id";
@@ -81,9 +85,18 @@ public class DbHelper extends SQLiteOpenHelper {
     public boolean addBmiHistory(String email, float bmi, String category) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+
+//        date otomatis
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                Locale.getDefault());
+        String currentDateTime = dateFormat.format(new Date());
+
+//        create
         values.put(COLUMN_USER_EMAIL, email);
         values.put(COLUMN_BMI_RESULT, bmi);
         values.put(COLUMN_CATEGORY, category);
+        values.put(COLUMN_DATE, currentDateTime);
+
         long result = db.insert(TABLE_BMI_HISTORY, null, values);
         db.close();
         return result != -1;
