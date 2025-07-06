@@ -53,60 +53,21 @@ public class MainActivity extends AppCompatActivity {
         userEmail = sharedPreferences.getString("email", null);
         btnHistory = findViewById(R.id.btnHistory);
 
-        edtBerat.setMinValue(1);
-        edtBerat.setMaxValue(200);
-        edtTinggi.setMinValue(1);
-        edtTinggi.setMaxValue(250);
-        edtUsia.setMinValue(1);
+        edtUsia.setMinValue(10);
         edtUsia.setMaxValue(100);
+        edtUsia.setValue(25);
+
+        edtTinggi.setMinValue(100);
+        edtTinggi.setMaxValue(250);
+        edtTinggi.setValue(170);
+
+        edtBerat.setMinValue(30);
+        edtBerat.setMaxValue(200);
+        edtBerat.setValue(65);
 
 
 
-        btnHitung.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                float berat = edtBerat.getValue();
-                float tinggiCm = edtTinggi.getValue();
-
-                if (tinggiCm == 0) {
-                    Toast.makeText(MainActivity.this, "Tinggi tidak boleh nol!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                float tinggiM = tinggiCm / 100.0f; // pake 100.0f untuk memastikan pembagian float
-
-                float bmi = berat / (tinggiM * tinggiM);
-
-                String kategori;
-                String penjelasan;
-
-                if (bmi < 18.5) {
-                    kategori = "Kurus";
-                    penjelasan = "Berat badan Anda di bawah normal. Cobalah mengonsumsi makanan bergizi seimbang dan tingkatkan asupan kalori harian.";
-                } else if (bmi < 24.9) {
-                    kategori = "Normal";
-                    penjelasan = "Berat badan Anda ideal. Pertahankan pola makan sehat dan tetap aktif secara fisik.";
-                } else if (bmi < 29.9) {
-                    kategori = "Gemuk";
-                    penjelasan = "Berat badan Anda sedikit berlebih. Disarankan untuk memperbaiki pola makan dan meningkatkan aktivitas fisik.";
-                } else {
-                    kategori = "Obesitas";
-                    penjelasan = "Anda termasuk dalam kategori obesitas. Segera konsultasikan dengan ahli gizi atau dokter.";
-                }
-
-                // store ke db
-                if (userEmail != null) {
-                    boolean isSaved = db.addBmiHistory(userEmail, bmi, kategori);
-                    if (!isSaved) {
-                        Toast.makeText(MainActivity.this, "Gagal menyimpan riwayat", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                txtBmiValue.setText(String.format("%.1f", bmi));
-                txtBmiCategory.setText(kategori);
-                txtBmiSuggestion.setText(penjelasan);
-            }
-        });
+        btnHitung.setOnClickListener(v -> calculateBmi() );
 
 
         btnHistory.setOnClickListener(new View.OnClickListener() {
@@ -119,13 +80,12 @@ public class MainActivity extends AppCompatActivity {
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                edtBerat.setValue(1);
-                edtTinggi.setValue(1);
-                edtUsia.setValue(1);
+                edtUsia.setValue(25);
+                edtTinggi.setValue(170);
+                edtBerat.setValue(65);
                 txtBmiValue.setText("0.0");
                 txtBmiCategory.setText("Kategori");
                 txtBmiSuggestion.setText("Saran akan muncul di sini.");
-                edtBerat.requestFocus();
             }
         });
 
@@ -140,5 +100,46 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    private void calculateBmi() {
+        float berat = edtBerat.getValue();
+        float tinggiCm = edtTinggi.getValue();
+
+        if (tinggiCm <= 0) {
+            Toast.makeText(this, "Tinggi badan harus lebih dari 0!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Formula BMI yang benar
+        float tinggiM = tinggiCm / 100.0f;
+        float bmi = berat / (tinggiM * tinggiM);
+
+        // Logika kategori dan saran
+        String kategori;
+        String penjelasan;
+
+        if (bmi < 18.5) {
+            kategori = "Kurus";
+            penjelasan = "Berat badan Anda di bawah normal. Cobalah mengonsumsi makanan bergizi seimbang.";
+        } else if (bmi < 24.9) {
+            kategori = "Normal";
+            penjelasan = "Berat badan Anda ideal. Pertahankan pola makan sehat dan tetap aktif.";
+        } else if (bmi < 29.9) {
+            kategori = "Gemuk";
+            penjelasan = "Berat badan Anda sedikit berlebih. Perbaiki pola makan dan tingkatkan aktivitas fisik.";
+        } else {
+            kategori = "Obesitas";
+            penjelasan = "Anda termasuk kategori obesitas. Segera konsultasikan dengan ahli gizi.";
+        }
+
+        // Tampilkan hasil
+        txtBmiValue.setText(String.format("%.1f", bmi));
+        txtBmiCategory.setText(kategori);
+        txtBmiSuggestion.setText(penjelasan);
+
+        // Simpan ke database
+        if (userEmail != null) {
+            db.addBmiHistory(userEmail, bmi, kategori);
+        }
     }
 }

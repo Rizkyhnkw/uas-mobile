@@ -3,20 +3,36 @@ package com.example.mybmi;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
 public class HistoryActivity extends AppCompatActivity {
     private RecyclerView recyclerViewHistory;
     private DbHelper db;
     private HistoryAdapter adapter;
+    private LineChart lineChart;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -28,6 +44,7 @@ public class HistoryActivity extends AppCompatActivity {
         db = new DbHelper(this);
         recyclerViewHistory = findViewById(R.id.recyclerViewHistory);
         recyclerViewHistory.setLayoutManager(new LinearLayoutManager(this));
+        lineChart = findViewById(R.id.lineChart);
 
         SharedPreferences sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE);
         String userEmail = sharedPreferences.getString("email", "");
@@ -35,5 +52,75 @@ public class HistoryActivity extends AppCompatActivity {
         adapter = new HistoryAdapter(cursor);
         recyclerViewHistory.setAdapter(adapter);
 
+    }
+    public void setupLineChart() {
+        lineChart.getDescription().setEnabled(false);
+        lineChart.setTouchEnabled(true);
+        lineChart.setDragEnabled(true);
+        lineChart.setScaleEnabled(true);
+        lineChart.setPinchZoom(true);
+        lineChart.setDrawGridBackground(false);
+        lineChart.setDrawBorders(false);
+        lineChart.setDrawGridBackground(false);
+
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+    }
+    private void loadChartData(Cursor cursor) {
+        ArrayList<Entry> entries = new ArrayList<>();
+        final ArrayList<String> xLabels = new ArrayList<>();
+        SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat chartLabelFormat = new SimpleDateFormat("dd/MM", Locale.getDefault());
+//pindah cursor ke awal buat read data
+        if(cursor.moveToFirst()) {
+            int i = 0;
+            do {
+                float bmi = cursor.getFloat(cursor.getColumnIndexOrThrow("bmi_result"));
+                String dateStr = cursor.getString(cursor.getColumnIndexOrThrow("date"));
+                entries.add(new Entry(i, bmi));
+                try {
+                    Date date = dbFormat.parse(dateStr);
+                    xLabels.add(chartLabelFormat.format(date));
+                } catch (ParseException e) {
+                    xLabels.add("");
+                }
+                i++;
+            } while (cursor.moveToNext());
+        }
+//        cek data minimum
+        if ((entries.size() < 2)){
+            lineChart.clear();
+            lineChart.setNoDataText("Minimal 2 data untuk menampilkan grafik");
+            lineChart.invalidate();
+            return;
+        }
+
+//        set value X-Axis
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                if (value < xLabels.size() && value>=0) {
+                return xLabels.get((int) value);}
+                return "";
+            }
+        });
+
+        LineDataSet dataSet = new LineDataSet(entries, "BMI History");
+//        Styling dulu
+        dataSet.setColor(ContextCompat.getColor(this, R.color.bt));
+        dataSet.setCircleColor(ContextCompat.getColor(this, R.color.bt));
+        dataSet.setLineWidth(2f);
+        dataSet.setCircleRadius(4f);
+        dataSet.setValueTextSize(10f);
+        dataSet.setValueTextColor(Color.BLACK);
+        dataSet.setDrawFilled(true);
+        dataSet.setFillColor(ContextCompat.getColor(this, R.color.bt));
+        dataSet.setFillAlpha(50);
+
+        LineData lineData = new LineData(dataSet);
+        lineChart.setData(lineData);
+        lineChart.invalidate(); //refresh chart
     }
 }
