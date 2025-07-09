@@ -90,20 +90,36 @@ public class DbHelper extends SQLiteOpenHelper {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
                 Locale.getDefault());
         String currentDateTime = dateFormat.format(new Date());
+        return addBmiHistoryWithDate(email, bmi, category, currentDateTime);
 
 //        create
-        values.put(COLUMN_USER_EMAIL, email);
-        values.put(COLUMN_BMI_RESULT, bmi);
-        values.put(COLUMN_CATEGORY, category);
-        values.put(COLUMN_DATE, currentDateTime);
+//        values.put(COLUMN_USER_EMAIL, email);
+//        values.put(COLUMN_BMI_RESULT, bmi);
+//        values.put(COLUMN_CATEGORY, category);
+//        values.put(COLUMN_DATE, currentDateTime);
+//
+//        long result = db.insert(TABLE_BMI_HISTORY, null, values);
+//        db.close();
+//        return result != -1;
 
-        long result = db.insert(TABLE_BMI_HISTORY, null, values);
-        db.close();
-        return result != -1;
     }
     public Cursor getBmiHistory(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_BMI_HISTORY + " WHERE " + COLUMN_USER_EMAIL + " = ?", new String[]{email});
           }
+    // function sementara buat generate chart
+
+    public boolean addBmiHistoryWithDate(String email, float bmi, String category, String date) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER_EMAIL, email);
+        values.put(COLUMN_BMI_RESULT, bmi);
+        values.put(COLUMN_CATEGORY, category);
+        values.put(COLUMN_DATE, date); // Menggunakan tanggal dari parameter
+
+        long result = db.insert(TABLE_BMI_HISTORY, null, values);
+        db.close();
+        return result != -1;
+    }
 
 }

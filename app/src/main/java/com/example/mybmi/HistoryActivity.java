@@ -52,15 +52,17 @@ public class HistoryActivity extends AppCompatActivity {
         adapter = new HistoryAdapter(cursor);
         recyclerViewHistory.setAdapter(adapter);
 
+//        tampilkan chart
+        setupLineChart();
+        loadChartData(cursor);
+
     }
     public void setupLineChart() {
-        lineChart.getDescription().setEnabled(false);
+        lineChart.getDescription().setEnabled(false); // Menghilangkan deskripsi
         lineChart.setTouchEnabled(true);
         lineChart.setDragEnabled(true);
         lineChart.setScaleEnabled(true);
         lineChart.setPinchZoom(true);
-        lineChart.setDrawGridBackground(false);
-        lineChart.setDrawBorders(false);
         lineChart.setDrawGridBackground(false);
 
         XAxis xAxis = lineChart.getXAxis();
@@ -73,17 +75,20 @@ public class HistoryActivity extends AppCompatActivity {
         SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         SimpleDateFormat chartLabelFormat = new SimpleDateFormat("dd/MM", Locale.getDefault());
 //pindah cursor ke awal buat read data
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             int i = 0;
             do {
                 float bmi = cursor.getFloat(cursor.getColumnIndexOrThrow("bmi_result"));
                 String dateStr = cursor.getString(cursor.getColumnIndexOrThrow("date"));
+
                 entries.add(new Entry(i, bmi));
+
+                // Format tanggal untuk label
                 try {
                     Date date = dbFormat.parse(dateStr);
                     xLabels.add(chartLabelFormat.format(date));
                 } catch (ParseException e) {
-                    xLabels.add("");
+                    xLabels.add(""); // Tambah label kosong jika ada error
                 }
                 i++;
             } while (cursor.moveToNext());
@@ -101,13 +106,15 @@ public class HistoryActivity extends AppCompatActivity {
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                if (value < xLabels.size() && value>=0) {
-                return xLabels.get((int) value);}
+                // Pastikan value adalah index yang valid
+                if (value >= 0 && value < xLabels.size()) {
+                    return xLabels.get((int) value);
+                }
                 return "";
             }
         });
 
-        LineDataSet dataSet = new LineDataSet(entries, "BMI History");
+        LineDataSet dataSet = new LineDataSet(entries, "Nilai BMI");
 //        Styling dulu
         dataSet.setColor(ContextCompat.getColor(this, R.color.bt));
         dataSet.setCircleColor(ContextCompat.getColor(this, R.color.bt));

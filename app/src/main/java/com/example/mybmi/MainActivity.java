@@ -11,6 +11,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         edtBerat.setMinValue(30);
         edtBerat.setMaxValue(200);
         edtBerat.setValue(65);
+        addManualHistory();
 
 
 
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
     }
     private void calculateBmi() {
         float berat = edtBerat.getValue();
@@ -141,5 +144,22 @@ public class MainActivity extends AppCompatActivity {
         if (userEmail != null) {
             db.addBmiHistory(userEmail, bmi, kategori);
         }
+    }
+//    func sementara
+    private void addManualHistory() {
+        if (userEmail == null) {
+            Toast.makeText(this, "Tidak ada user yang login!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Log.d("ManualHistory", "Mencoba menambahkan data manual untuk: " + userEmail);
+
+        // Data dummy (BMI, Kategori, Tanggal)
+        db.addBmiHistoryWithDate(userEmail, 22.5f, "Normal", "2025-07-01 10:00:00");
+        db.addBmiHistoryWithDate(userEmail, 23.1f, "Normal", "2025-07-02 11:30:00");
+        db.addBmiHistoryWithDate(userEmail, 24.0f, "Normal", "2025-07-03 09:00:00");
+        db.addBmiHistoryWithDate(userEmail, 25.5f, "Gemuk", "2025-07-04 15:00:00");
+
+        Toast.makeText(this, "Data riwayat manual berhasil ditambahkan!", Toast.LENGTH_SHORT).show();
     }
 }
