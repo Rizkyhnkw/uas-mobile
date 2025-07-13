@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
     tools:context=".Splash">
 
     <ImageView
@@ -15,5 +16,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/whatsapp_image_2025_07_01_at_19_44_56_ed7abf83" />
+        app:srcCompat="@drawable/splashlogo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

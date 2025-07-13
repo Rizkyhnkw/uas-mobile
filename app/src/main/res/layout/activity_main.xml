@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F4F8"
+    android:background="@drawable/bg_gradient"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
-
         <TextView
             android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
@@ -160,22 +159,32 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <Button
-                android:id="@+id/btnHistory"
+                android:id="@+id/btnProfile"
+                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
-                android:text="Riwayat"
-                style="?attr/materialButtonOutlinedStyle" />
+                android:layout_weight="1"
+                android:text="Profil" />
+
+            <Button
+                android:id="@+id/btnHistory"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:text="Riwayat" />
 
             <Button
                 android:id="@+id/btnReset"
+                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="Reset"
-                style="?attr/materialButtonOutlinedStyle" />
+                android:layout_weight="1"
+                android:text="Reset" />
         </LinearLayout>
 
         <LinearLayout

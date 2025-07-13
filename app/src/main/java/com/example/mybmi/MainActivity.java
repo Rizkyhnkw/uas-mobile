@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private String userEmail;
     private DbHelper db;
     private  Button btnHistory;
+    private Button btnProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE);
         userEmail = sharedPreferences.getString("email", null);
         btnHistory = findViewById(R.id.btnHistory);
+        btnProfile = findViewById(R.id.btnProfile);
+
 
         edtUsia.setMinValue(10);
         edtUsia.setMaxValue(100);
@@ -102,6 +105,13 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
     private void calculateBmi() {
@@ -145,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
             db.addBmiHistory(userEmail, bmi, kategori);
         }
     }
+
 //    func sementara
     private void addManualHistory() {
         if (userEmail == null) {

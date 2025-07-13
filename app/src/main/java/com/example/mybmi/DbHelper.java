@@ -121,5 +121,29 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
         return result != -1;
     }
+    public boolean updateUserPassword(String email, String newPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PASSWORD, newPassword);
 
+        // Memperbarui baris berdasarkan email
+        int rowsAffected = db.update(TABLE_USER, values, COLUMN_EMAIL + " = ?", new String[]{email});
+        db.close();
+        // Mengembalikan true jika ada baris yang terpengaruh (berhasil di-update)
+        return rowsAffected > 0;
+    }
+
+    // Metode untuk mendapatkan nama pengguna berdasarkan email
+    public String getUserName(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_USER, new String[]{COLUMN_NAME}, COLUMN_EMAIL + " = ?", new String[]{email}, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            String name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME));
+            cursor.close();
+            db.close();
+            return name;
+        }
+        db.close();
+        return null; // Mengembalikan null jika tidak ditemukan
+    }
 }
