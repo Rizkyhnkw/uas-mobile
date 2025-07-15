@@ -9,7 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
@@ -20,6 +20,14 @@ public class BaseActivity extends AppCompatActivity {
     protected void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
+            // TAMBAHKAN BARIS INI
+            setSupportActionBar(toolbar);
+
+            // Anda bisa menghilangkan logo/judul default jika ada
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+            }
+
             ImageView profileImageView = toolbar.findViewById(R.id.profileImageView);
             profileImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -31,5 +39,4 @@ public class BaseActivity extends AppCompatActivity {
                 }
             });
         }
-    }
-}
+    }}
