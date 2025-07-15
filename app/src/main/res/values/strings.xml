@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">My BMI</string>
+    <string name="profile">Profil</string>
 </resources>

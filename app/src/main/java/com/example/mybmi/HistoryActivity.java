@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class HistoryActivity extends AppCompatActivity {
+public class HistoryActivity extends BaseActivity {
     private RecyclerView recyclerViewHistory;
     private DbHelper db;
     private HistoryAdapter adapter;
@@ -40,6 +40,7 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_history);
+        setupToolbar();
 
         db = new DbHelper(this);
         recyclerViewHistory = findViewById(R.id.recyclerViewHistory);

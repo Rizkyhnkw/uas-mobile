@@ -14,7 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseActivity {
 
     private TextView txtName, txtEmail;
     private EditText edtNewPassword;
@@ -26,6 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile);
+        setupToolbar();
 
         db = new DbHelper(this);
         sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE);

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -15,7 +16,9 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+public class MainActivity extends BaseActivity {
 
     private NumberPicker edtBerat;
     private NumberPicker edtTinggi;
@@ -24,37 +27,40 @@ public class MainActivity extends AppCompatActivity {
     private Button btnReset;
     private NumberPicker edtUsia;
     private RadioGroup radioGender;
-    private RadioButton radioPria, radioWanita;
+//    private RadioButton radioPria, radioWanita;
     private Button btnLogout;
     private SharedPreferences sharedPreferences;
     private String userEmail;
     private DbHelper db;
     private  Button btnHistory;
-    private Button btnProfile;
+//    private Button btnProfile;
+    private ImageView profileImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupToolbar();
 
         // Inisialisasi UI SETELAH setContentView
-        edtBerat = findViewById(R.id.edtBerat);
+        edtUsia = findViewById(R.id.edtUsia);
         edtTinggi = findViewById(R.id.edtTinggi);
+        edtBerat = findViewById(R.id.edtBerat);
+        radioGender = findViewById(R.id.radioGender);
         btnHitung = findViewById(R.id.btnHitung);
+        btnReset = findViewById(R.id.btnReset);
+        btnHistory = findViewById(R.id.btnHistory);
+
+        btnLogout = findViewById(R.id.btnLogout);
         txtBmiValue = findViewById(R.id.txtBmiValue);
         txtBmiCategory = findViewById(R.id.txtBmiCategory);
         txtBmiSuggestion = findViewById(R.id.txtBmiSuggestion);
-        btnReset = findViewById(R.id.btnReset);
-        edtUsia = findViewById(R.id.edtUsia);
-        radioGender = findViewById(R.id.radioGender);
-        radioPria = findViewById(R.id.radioPria);
-        radioWanita = findViewById(R.id.radioWanita);
-        btnLogout = findViewById(R.id.btnLogout);
+        profileImageView = findViewById(R.id.profileImageView);
+
+        // 2. Inisialisasi Database dan Sesi Pengguna (PINDAHKAN KE SINI)
         db = new DbHelper(this);
         sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE);
         userEmail = sharedPreferences.getString("email", null);
-        btnHistory = findViewById(R.id.btnHistory);
-        btnProfile = findViewById(R.id.btnProfile);
 
 
         edtUsia.setMinValue(10);
@@ -68,12 +74,13 @@ public class MainActivity extends AppCompatActivity {
         edtBerat.setMinValue(30);
         edtBerat.setMaxValue(200);
         edtBerat.setValue(65);
-        addManualHistory();
+//        addManualHistory();
 
 
 
         btnHitung.setOnClickListener(v -> calculateBmi() );
-
+        btnReset.setOnClickListener(v -> resetInput());
+        btnLogout.setOnClickListener(v-> logout());
 
         btnHistory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,36 +89,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        btnReset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                edtUsia.setValue(25);
-                edtTinggi.setValue(170);
-                edtBerat.setValue(65);
-                txtBmiValue.setText("0.0");
-                txtBmiCategory.setText("Kategori");
-                txtBmiSuggestion.setText("Saran akan muncul di sini.");
-            }
-        });
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("isLoggedIn", false);
-                editor.apply();
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        btnProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
     }
     private void calculateBmi() {
@@ -155,22 +134,39 @@ public class MainActivity extends AppCompatActivity {
             db.addBmiHistory(userEmail, bmi, kategori);
         }
     }
+    private void resetInput() {
+        edtUsia.setValue(25);
+        edtTinggi.setValue(170);
+        edtBerat.setValue(65);
+        txtBmiValue.setText("0.0");
+        txtBmiCategory.setText("Kategori");
+        txtBmiSuggestion.setText("Saran akan muncul di sini.");
+    }
+
+    private void logout() {
+        SharedPreferences.Editor editor = getSharedPreferences("user_session", MODE_PRIVATE).edit();
+        editor.clear();
+        editor.apply();
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
 //    func sementara
-    private void addManualHistory() {
-        if (userEmail == null) {
-            Toast.makeText(this, "Tidak ada user yang login!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Log.d("ManualHistory", "Mencoba menambahkan data manual untuk: " + userEmail);
-
-        // Data dummy (BMI, Kategori, Tanggal)
-        db.addBmiHistoryWithDate(userEmail, 22.5f, "Normal", "2025-07-01 10:00:00");
-        db.addBmiHistoryWithDate(userEmail, 23.1f, "Normal", "2025-07-02 11:30:00");
-        db.addBmiHistoryWithDate(userEmail, 24.0f, "Normal", "2025-07-03 09:00:00");
-        db.addBmiHistoryWithDate(userEmail, 25.5f, "Gemuk", "2025-07-04 15:00:00");
-
-        Toast.makeText(this, "Data riwayat manual berhasil ditambahkan!", Toast.LENGTH_SHORT).show();
-    }
+//    private void addManualHistory() {
+//        if (userEmail == null) {
+//            Toast.makeText(this, "Tidak ada user yang login!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        Log.d("ManualHistory", "Mencoba menambahkan data manual untuk: " + userEmail);
+//
+//        // Data dummy (BMI, Kategori, Tanggal)
+//        db.addBmiHistoryWithDate(userEmail, 22.5f, "Normal", "2025-07-01 10:00:00");
+//        db.addBmiHistoryWithDate(userEmail, 23.1f, "Normal", "2025-07-02 11:30:00");
+//        db.addBmiHistoryWithDate(userEmail, 24.0f, "Normal", "2025-07-03 09:00:00");
+//        db.addBmiHistoryWithDate(userEmail, 25.5f, "Gemuk", "2025-07-04 15:00:00");
+//
+//        Toast.makeText(this, "Data riwayat manual berhasil ditambahkan!", Toast.LENGTH_SHORT).show();
+//    }
 }
