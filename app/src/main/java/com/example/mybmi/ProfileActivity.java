@@ -26,7 +26,7 @@ public class ProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_profile);
-        setupToolbar();
+
 
         db = new DbHelper(this);
         sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE);

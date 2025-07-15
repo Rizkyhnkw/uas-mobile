@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setupToolbar();
+
 
         // Inisialisasi UI SETELAH setContentView
         edtUsia = findViewById(R.id.edtUsia);
