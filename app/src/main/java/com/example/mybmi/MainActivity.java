@@ -37,6 +37,9 @@ public class MainActivity extends BaseActivity {
     private ImageView profileImageView;
 
     @Override
+    protected void loadUserProfile() {
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -93,6 +96,7 @@ public class MainActivity extends BaseActivity {
 
 
     }
+
     private void calculateBmi() {
         float berat = edtBerat.getValue();
         float tinggiCm = edtTinggi.getValue();
@@ -134,6 +138,7 @@ public class MainActivity extends BaseActivity {
             db.addBmiHistory(userEmail, bmi, kategori);
         }
     }
+
     private void resetInput() {
         edtUsia.setValue(25);
         edtTinggi.setValue(170);

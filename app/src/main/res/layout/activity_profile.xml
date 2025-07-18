@@ -28,6 +28,23 @@
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="32dp"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profilImage"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/user_profile"
+                app:civ_border_width="2dp"
+                app:civ_border_color="#FFFFFF"
+                android:layout_marginBottom="16dp"/>
+
+            <Button
+                android:id="@+id/btnChangePhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ubah Foto"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_marginBottom="24dp"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -56,6 +56,10 @@ public class HistoryActivity extends BaseActivity {
         loadChartData(cursor);
 
     }
+    @Override
+    protected void loadUserProfile() {
+    }
+
     public void setupLineChart() {
         lineChart.getDescription().setEnabled(false); // Menghilangkan deskripsi
         lineChart.setTouchEnabled(true);
