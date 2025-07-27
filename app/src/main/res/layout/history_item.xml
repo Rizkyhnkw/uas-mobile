@@ -1,30 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:layout_marginBottom="8dp"
-    android:background="@android:color/white">
+    android:layout_marginVertical="4dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp">
 
-    <TextView
-        android:id="@+id/txtHistoryBmi"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="BMI: 24.5"
-        android:textSize="18sp"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/txtHistoryCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Kategori: Normal" />
+        <View
+            android:id="@+id/category_indicator"
+            android:layout_width="6dp"
+            android:layout_height="match_parent"
+            android:background="@color/main_text" />
 
-    <TextView
-        android:id="@+id/txtHistoryDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tanggal: 2024-07-01"
-        android:layout_marginTop="4dp"
-        android:textSize="12sp"/>
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/txtHistoryBmi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="BMI: 24.5"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_text"/>
+
+            <TextView
+                android:id="@+id/txtHistoryCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Kategori: Normal"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:id="@+id/txtHistoryDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Tanggal: 2025-07-27 12:30:00"
+                android:layout_marginTop="4dp"
+                android:textSize="12sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

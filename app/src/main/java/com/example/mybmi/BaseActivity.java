@@ -27,7 +27,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             // TAMBAHKAN BARIS INI
             setSupportActionBar(toolbar);
 
-            // Anda bisa menghilangkan logo/judul default jika ada
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
             }

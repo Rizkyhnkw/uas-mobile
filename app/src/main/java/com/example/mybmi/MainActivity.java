@@ -15,6 +15,7 @@ import android.widget.Toast;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -128,7 +129,25 @@ public class MainActivity extends BaseActivity {
             penjelasan = "Anda termasuk kategori obesitas. Segera konsultasikan dengan ahli gizi.";
         }
 
+        int colorResId;
+        switch (kategori.toLowerCase()) {
+            case "kurus":
+                colorResId = R.color.category_kurus;
+                break;
+            case "gemuk":
+                colorResId = R.color.category_gemuk;
+                break;
+            case "obesitas":
+                colorResId = R.color.category_obesitas;
+                break;
+            case "normal":
+            default:
+                colorResId = R.color.category_normal;
+                break;
+        }
         // Tampilkan hasil
+        txtBmiValue.setTextColor(ContextCompat.getColor(this, colorResId));
+        txtBmiCategory.setTextColor(ContextCompat.getColor(this, colorResId));
         txtBmiValue.setText(String.format("%.1f", bmi));
         txtBmiCategory.setText(kategori);
         txtBmiSuggestion.setText(penjelasan);

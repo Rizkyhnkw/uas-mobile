@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.appbar.AppBarLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorPrimary">
+    android:background="@color/white"
+    android:elevation="4dp">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -13,22 +13,20 @@
 
         <ImageView
             android:id="@+id/logoImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:adjustViewBounds="true"
-            android:maxWidth="150dp"
-            android:scaleType="fitCenter"
             android:src="@drawable/splashlogo"
             android:contentDescription="@string/app_name" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileImageView"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="end"
             android:layout_marginEnd="16dp"
-            android:contentDescription="@string/profile"
-            android:src="@drawable/user_profile" />
+            android:src="@drawable/user_profile"
+            android:contentDescription="@string/profile" />
 
     </androidx.appcompat.widget.Toolbar>
 

@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
     <color name="maintext">#2C3E50</color>
     <color name="bt">#4A90E2</color>
+    <color name="primary_teal">#00897B</color>
+    <color name="accent_orange">#FF8A65</color>
+    <color name="light_cyan">#4DD0E1</color>
+    <color name="background_light">#F0F4F8</color>
+    <color name="main_text">#263238</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="category_kurus">#3498DB</color>
+    <color name="category_normal">#2ECC71</color>
+    <color name="category_gemuk">#F1C40F</color>
+    <color name="category_obesitas">#E74C3C</color>
 </resources>

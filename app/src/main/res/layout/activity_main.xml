@@ -136,8 +136,8 @@
                 android:layout_height="wrap_content"
                 android:text="Hitung BMI"
                 android:layout_marginTop="24dp"
-                android:backgroundTint="@color/bt"
-                android:textColor="@android:color/white"
+                android:backgroundTint="@color/primary_teal"
+                android:textColor="@color/white"
                 android:paddingVertical="12dp" />
 
             <LinearLayout
@@ -150,6 +150,8 @@
                 <Button
                     android:id="@+id/btnHistory"
                     style="?attr/materialButtonOutlinedStyle"
+                    app:strokeColor="@color/accent_orange"
+                    android:textColor="@color/accent_orange"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
@@ -159,6 +161,8 @@
                 <Button
                     android:id="@+id/btnReset"
                     style="?attr/materialButtonOutlinedStyle"
+                    app:strokeColor="@color/accent_orange"
+                    android:textColor="@color/accent_orange"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
@@ -190,7 +194,7 @@
                     android:text="0.0"
                     android:textSize="48sp"
                     android:textStyle="bold"
-                    android:textColor="@color/bt" />
+                    android:textColor="@color/primary_teal" />
 
                 <TextView
                     android:id="@+id/txtBmiCategory"
@@ -198,7 +202,8 @@
                     android:layout_height="wrap_content"
                     android:text="Kategori"
                     android:textSize="20sp"
-                    android:textStyle="italic"/>
+                    android:textColor="@color/accent_orange"
+                    android:textStyle="bold|italic"/>
 
                 <TextView
                     android:id="@+id/txtBmiSuggestion"
