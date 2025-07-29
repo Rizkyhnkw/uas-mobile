@@ -75,8 +75,10 @@ public class HistoryActivity extends BaseActivity {
     private void loadChartData(Cursor cursor) {
         ArrayList<Entry> entries = new ArrayList<>();
         final ArrayList<String> xLabels = new ArrayList<>();
-        SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        SimpleDateFormat chartLabelFormat = new SimpleDateFormat("dd/MM", Locale.getDefault());
+        SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                Locale.getDefault());
+        SimpleDateFormat chartLabelFormat = new SimpleDateFormat("dd/MM",
+                Locale.getDefault());
 //pindah cursor ke awal buat read data
         if (cursor.moveToFirst()) {
             int i = 0;
