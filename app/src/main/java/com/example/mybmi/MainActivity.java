@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
         txtBmiSuggestion = findViewById(R.id.txtBmiSuggestion);
         profileImageView = findViewById(R.id.profileImageView);
 
-        // 2. Inisialisasi Database dan Sesi Pengguna (PINDAHKAN KE SINI)
+        // Inisialisasi Database dan Sesi Pengguna
         db = new DbHelper(this);
         sharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE);
         userEmail = sharedPreferences.getString("email", null);
@@ -93,9 +93,6 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-
-
-
     }
 
     private void calculateBmi() {
